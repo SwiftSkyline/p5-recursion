@@ -9,8 +9,8 @@ function setup() {
     // smooth the stroke joins
     strokeJoin(ROUND);
     // define branch colours
-    brown1 = color('#5C261A');
-    brown2 = color('#9D9473');
+    brown1 = color('#AB589D');
+    brown2 = color('#587FAB');
     // create a slider
     slider = createSlider(5, 180, 45);
     slider.position(10, 10);
@@ -19,12 +19,12 @@ function setup() {
     slider.input(draw);
 }
 function draw() {
-    background(220);
+    background(180);
     // this resets all the transforms (translations and rotations)
     resetMatrix();
     // initially translate to the middle of the bottom edge of the canvas
     translate(width / 2, height);
-    branch(350);
+    branch(200);
 }
 function branch(len) { // length of branch to draw
     // the maximum/minimum angle of each branch
@@ -39,16 +39,16 @@ function branch(len) { // length of branch to draw
     // immediately translate the drawing context to the top of the line ready for the next branch call
     translate(0, -len);
     // recursion exit condition 
-    if (len > 20) {
+    if (len > 10) {
         // draw leaf and terminate recursion
-        if (len < 50) {
+        if (len < 15) {
             // semi-random leaf colour
-            let r = 200 + random(-20, 20);
-            let g = 20 + random(-20, 20);
-            let b = 40 + random(-20, 20);
-            fill(r, g, b, 100);
+            let r = 220 + random(-20, 20);
+            let g = 220 + random(-20, 20);
+            let b = 170 + random(-20, 20);
+            fill(r, g, b, 70);
             // semi-random leaf size
-            let size = 15 + random(15);
+            let size = 30 + random(15);
             noStroke();
             // triangle = simpler leaf
             // triangle(-size/2, 0, size/2, 0, 0, -size);
