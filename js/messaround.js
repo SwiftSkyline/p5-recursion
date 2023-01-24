@@ -12,7 +12,7 @@ function setup() {
     brown1 = color('#AB589D');
     brown2 = color('#587FAB');
     // create a slider
-    slider = createSlider(5, 180, 45);
+    slider = createSlider(5, 180, 5);
     slider.position(10, 10);
     slider.style("width","300px");
     // when the slider changes, redraw the tree
@@ -24,14 +24,14 @@ function draw() {
     resetMatrix();
     // initially translate to the middle of the bottom edge of the canvas
     translate(width / 2, height);
-    branch(200);
+    branch(100);
 }
 function branch(len) { // length of branch to draw
     // the maximum/minimum angle of each branch
     // value taken from the slider
     let maxAngle = slider.value();
     // use map() to derive branch stroke weight from current length of branch
-    strokeWeight(map(len, 20, 200, 1, 10));
+    strokeWeight(map(len, 10, 200, 1, 10));
     // semi-randomly mix two colours for each branch segment
     stroke(lerpColor(brown1, brown2, random(0.3, 0.7)));
     // the draw command for a branch
@@ -41,7 +41,8 @@ function branch(len) { // length of branch to draw
     // recursion exit condition 
     if (len > 10) {
         // draw leaf and terminate recursion
-        if (len < 15) {
+        if (len < 15) { 
+            console.log("Ferntest")
             // semi-random leaf colour
             let r = 200 + random(-20, 20);
             let g = 160 + random(-20, 20);
@@ -49,29 +50,29 @@ function branch(len) { // length of branch to draw
             fill(r, g, b, 90);
             // semi-random leaf size
             let size = 200 + random(40);
-            noStroke();
-            // triangle = simpler leaf
-            // triangle(-size/2, 0, size/2, 0, 0, -size);
-            // start a leaf shape
-            beginShape();
-            let radius = random(10, 30);
-            // draw a semi-circle
-            for (let i = 8; i < 60; i++) {
-                // use trig to caculate positions
-                let x = radius * cos(i);
-                let y = radius * sin(i);
-                // add each position to the shape
-                vertex(x, y);
-            }
-            // draw an opposing semi-circle
-            for (let i = 60; i > 8; i--) {
-                let x = radius * cos(i);
-                let y = radius * sin(-i);
-                vertex(x, y);
-            }
-            // join the points to create a continuous shape
-            endShape(CLOSE);
+           noStroke();
+        
         } else {
+            push();
+            rotate(90);
+            line(0,0,0,-len * 0.5)
+            let spacer=40;
+            let size=25;
+            for(let i=0; i<len*0.5;i+=spacer){
+                ellipse(size,i,size*2,size)
+                ellipse(-size,i,size*2,size)
+                //fern leaves left size
+            }
+            pop();
+            push();
+            rotate(-90);
+            line(0,0,0,-len * 0.5)
+            for(let i=0; i<len*0.5;i+=spacer){
+                ellipse(size,i,size*2,size)
+                ellipse(-size,i,size*2,size)
+                //fern leaves right side
+            }
+            pop();
             // branch 1
             push(); // save the current drawing context
             rotate(random(-maxAngle, maxAngle)); // rotate the whole canvas
@@ -79,21 +80,21 @@ function branch(len) { // length of branch to draw
             branch(len * 0.8); // create a new branch
             pop(); // restore the drawing context
             // repeat for each branch
-            // branch 2
-            push();
-            rotate(random(-maxAngle, maxAngle));
-            branch(len * 0.6);
-            pop();
-            // branch 3
-            push();
-            rotate(random(-maxAngle, maxAngle));
-            branch(len * 0.5);
-            pop();
-            // branch 4
-            push();
-            rotate(random(-maxAngle, maxAngle));
-            branch(len * 0.5);
-            pop();
+            // // branch 2
+            // push();
+            // rotate(random(-maxAngle, maxAngle));
+            // branch(len * 0.6);
+            // pop();
+            // // branch 3
+            // push();
+            // rotate(random(-maxAngle, maxAngle));
+            // branch(len * 0.5);
+            // pop();
+            // // branch 4
+            // push();
+            // rotate(random(-maxAngle, maxAngle));
+            // branch(len * 0.5);
+            // pop();
         }
 
     }
